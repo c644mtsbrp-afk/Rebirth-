@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#070a12">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="REBIRTH">
+  <meta name="description" content="Your private daily transformation dashboard.">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="icons/icon-192.png">
+  <link rel="stylesheet" href="styles.css">
+  <title>REBIRTH — Personal Transformation</title>
+</head>
+<body>
+  <div class="app-shell">
+    <header class="topbar">
+      <div>
+        <div class="eyebrow">YOUR PERSONAL SYSTEM</div>
+        <h1>RE<span>BIRTH</span></h1>
+      </div>
+      <button id="settingsBtn" class="icon-btn" aria-label="Settings" title="Settings">⚙</button>
+    </header>
+
+    <section class="hero panel">
+      <div class="hero-top">
+        <div>
+          <div class="eyebrow" id="todayLabel">TODAY</div>
+          <h2>Build the person<br>you want to become.</h2>
+        </div>
+        <div class="streak-bubble"><strong id="percent">0%</strong><small>COMPLETE</small></div>
+      </div>
+      <div class="progress-track"><div id="progressBar" class="progress-fill"></div></div>
+      <div class="hero-bottom"><span id="taskCount">0 of 0 tasks done</span><span id="dateLabel"></span></div>
+    </section>
+
+    <nav class="tabs" aria-label="Sections">
+      <button class="tab active" data-tab="today">Today</button>
+      <button class="tab" data-tab="diet">Diet</button>
+      <button class="tab" data-tab="progress">Progress</button>
+    </nav>
+
+    <main>
+      <section id="todayView" class="view active">
+        <div class="section-heading"><div><div class="eyebrow">YOUR DAY</div><h2>Daily checklist</h2></div><button id="resetDayBtn" class="text-btn">Reset today</button></div>
+        <div id="routineList"></div>
+        <section class="panel note-panel">
+          <div class="note-icon">✦</div>
+          <div><strong>Keep it sustainable</strong><p>Consistency beats perfection. If you miss a task, continue with the next one—no guilt, no all-or-nothing thinking.</p></div>
+        </section>
+      </section>
+
+      <section id="dietView" class="view">
+        <div class="section-heading"><div><div class="eyebrow">FUEL & RECOVER</div><h2>Nutrition log</h2></div></div>
+        <div class="metric-grid">
+          <div class="metric panel"><span>Water</span><strong><span id="waterValue">0</span><small> / 8 glasses</small></strong><div class="mini-track"><div id="waterBar"></div></div><div class="metric-actions"><button id="waterMinus">−</button><button id="waterPlus">+ glass</button></div></div>
+          <div class="metric panel"><span>Meals checked</span><strong id="mealCount">0<small> / 5</small></strong><p class="muted">Aim for regular, balanced meals.</p></div>
+        </div>
+        <div class="panel form-panel">
+          <div class="eyebrow">BODY CHECK-IN</div>
+          <h3>Weight log</h3>
+          <p class="muted">Weigh under similar conditions. Trends matter more than daily changes.</p>
+          <form id="weightForm" class="inline-form"><label for="weightInput">Weight (kg)</label><div class="input-row"><input id="weightInput" type="number" min="20" max="350" step="0.1" placeholder="e.g. 58.5" inputmode="decimal"><button class="primary-btn" type="submit">Save</button></div></form>
+          <div id="latestWeight" class="latest-weight">No weight logged yet.</div>
+        </div>
+        <div class="section-heading compact"><div><div class="eyebrow">SIMPLE DAILY PLAN</div><h2>Meal ideas</h2></div></div>
+        <div id="mealList"></div>
+        <div class="panel note-panel"><div class="note-icon">ⓘ</div><div><strong>Healthy weight gain</strong><p>Increase portions gradually. Include protein foods (eggs, milk, yogurt, lentils, beans, chicken or fish), carbohydrates, vegetables and healthy fats. Exact calorie needs depend on your body and activity.</p></div></div>
+      </section>
+
+      <section id="progressView" class="view">
+        <div class="section-heading"><div><div class="eyebrow">SHOW UP FOR YOURSELF</div><h2>Your progress</h2></div></div>
+        <div class="stats-grid">
+          <div class="stat panel"><span>Tasks today</span><strong id="statToday">0%</strong></div>
+          <div class="stat panel"><span>7-day average</span><strong id="statWeek">—</strong></div>
+          <div class="stat panel"><span>Water today</span><strong id="statWater">0/8</strong></div>
+          <div class="stat panel"><span>Weight entries</span><strong id="statWeights">0</strong></div>
+        </div>
+        <div class="panel history-panel"><div class="eyebrow">LAST 7 DAYS</div><h3>Consistency</h3><div id="weekBars" class="week-bars"></div></div>
+        <div class="panel form-panel"><div class="eyebrow">YOUR DATA, YOUR DEVICE</div><h3>Backup & privacy</h3><p class="muted">Your checklist, water, meals and weight entries are stored in this browser on this device. Clearing Safari website data can erase them. Export a backup regularly.</p><div class="button-row"><button id="exportBtn" class="primary-btn">Export backup</button><label class="secondary-btn file-label">Import backup<input id="importFile" type="file" accept="application/json" hidden></label></div><button id="clearDataBtn" class="danger-btn">Delete all app data</button></div>
+      </section>
+    </main>
+    <footer><span class="footer-mark">REBIRTH</span><span>Small steps. Every day.</span></footer>
+  </div>
+
+  <dialog id="settingsDialog" class="modal">
+    <form method="dialog" class="modal-inner">
+      <div class="modal-head"><div><div class="eyebrow">PERSONAL SETTINGS</div><h2>Routine preferences</h2></div><button class="icon-btn" aria-label="Close">×</button></div>
+      <label class="field-label" for="wakeTime">Preferred Tahajjud wake-up time</label><input id="wakeTime" type="time" value="04:00">
+      <label class="field-label" for="workStart">Factory start</label><input id="workStart" type="time" value="08:00">
+      <label class="field-label" for="workEnd">Factory finish</label><input id="workEnd" type="time" value="18:00">
+      <p class="muted small">Prayer times vary by date and location. This app does not calculate live prayer times—use your local mosque timetable or a trusted prayer app. Protect enough sleep; do not force a wake-up if you are unwell or sleep-deprived.</p>
+      <button id="saveSettings" class="primary-btn full" type="button">Save settings</button>
+    </form>
+  </dialog>
+  <div id="toast" role="status" aria-live="polite" class="toast"></div>
+  <script src="app.js"></script>
+</body>
+</html>
